@@ -55,21 +55,21 @@ jobs:
           push: true
           target: prod
           tags: ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest
-      
-    - name: Deploy on server
-      uses: appleboy/ssh-action@v1.0.3
-      env:
-        IMAGE_NAME: ${{ github.event.repository.name }}
-        IMAGE_TAG: latest
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.KEY }}
-        port: ${{ secrets.PORT }}
-        envs: IMAGE_NAME,IMAGE_TAG
-        script: |
-          docker pull $IMAGE_NAME:$IMAGE_TAG
-          docker stop cobreaqui-container
-          docker rm cobreaqui-container
-          docker run --init -d --name cobreaqui-container $IMAGE_NAME:$IMAGE_TAG
-          docker system prune -af
+        
+      - name: Deploy on server
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          IMAGE_NAME: ${{ github.event.repository.name }}
+          IMAGE_TAG: latest
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          envs: IMAGE_NAME,IMAGE_TAG
+          script: |
+            docker pull $IMAGE_NAME:$IMAGE_TAG
+            docker stop cobreaqui-container
+            docker rm cobreaqui-container
+            docker run --init -d --name cobreaqui-container $IMAGE_NAME:$IMAGE_TAG
+            docker system prune -af
