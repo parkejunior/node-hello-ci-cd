@@ -51,7 +51,7 @@ jobs:
       - name: Deploy on server
         uses: appleboy/ssh-action@v1.0.3
         env:
-          IMAGE_NAME: ${{ github.event.repository.name }}
+          IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}
           IMAGE_TAG: latest
         with:
           host: ${{ secrets.HOST }}
@@ -61,7 +61,7 @@ jobs:
           envs: IMAGE_NAME,IMAGE_TAG
           script: |
             docker pull $IMAGE_NAME:$IMAGE_TAG
-            docker stop $IMAGE_NAME
-            docker rm $IMAGE_NAME
-            docker run --init -d --name $IMAGE_NAME $IMAGE_NAME:$IMAGE_TAG
+            docker stop test-hello-container
+            docker rm test-hello-container
+            docker run --init -d --name test-hello-container $IMAGE_NAME:$IMAGE_TAG
             docker system prune -af
