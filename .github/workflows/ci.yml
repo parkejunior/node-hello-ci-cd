@@ -61,7 +61,7 @@ jobs:
           envs: IMAGE_NAME,IMAGE_TAG
           script: |
             docker pull $IMAGE_NAME:$IMAGE_TAG
-            docker stop cobreaqui-container
-            docker rm cobreaqui-container
-            docker run --init -d --name cobreaqui-container $IMAGE_NAME:$IMAGE_TAG
+            docker stop $IMAGE_NAME
+            docker rm $IMAGE_NAME
+            docker run --init -d --name $IMAGE_NAME $IMAGE_NAME:$IMAGE_TAG
             docker system prune -af
