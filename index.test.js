@@ -1,7 +1,11 @@
 import request from "supertest";
-import { app } from "./index";
+import { app, server } from "./index";
 
 describe("Test Handlers", function () {
+  afterAll(() => {
+    server.close();
+  })
+
   test("responds to /", async () => {
     const response = await request(app).get("/");
 
