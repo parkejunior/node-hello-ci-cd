@@ -63,5 +63,5 @@ jobs:
             docker pull $IMAGE_NAME:$IMAGE_TAG
             docker stop test-hello-container
             docker rm test-hello-container
-            docker run --init -d --name test-hello-container $IMAGE_NAME:$IMAGE_TAG
+            docker run --init -d -p 3000:3000 --name test-hello-container $IMAGE_NAME:$IMAGE_TAG
             docker system prune -af
